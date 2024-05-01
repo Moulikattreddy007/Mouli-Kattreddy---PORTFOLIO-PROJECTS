@@ -63,7 +63,7 @@ Group by location
 order by TotalDeaths desc
 
 
---lets see the data by continent
+-- seeing the data by continent
 
 --showing continents with highest deaths
 
