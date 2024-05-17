@@ -1,0 +1,463 @@
+
+--CREATING TOTALSALES TABLE FOR THE HOME DEPOT STORES IN AND AROUND THE CITY OF VANCOUVER
+
+
+Create Table Totalsales (
+StoreID INT PRIMARY KEY,
+storename VARCHAR(300),
+location VARCHAR(300),
+yearofsales INT,
+TotalSales INT
+);
+
+EXEC sp_columns 'TotalSales';
+
+
+Insert into Totalsales (StoreID, storename, Location, yearofsales, TotalSales) VALUES ( 7047, 'Burnaby', 'Burnaby', 2023, 86113615);
+
+select * 
+from Totalsales;
+
+
+Insert into Totalsales (StoreID, storename, Location, yearofsales, TotalSales) VALUES 
+( 7046, 'Northsurrey', 'surrey', 2023, 42984284),
+( 7259, 'cambie', 'vancouver', 2023, 30135474),
+( 7042, 'vancouverTerminal', 'vancouver', 2023, 75668185), 
+( 7145, 'portcoquitlam', 'portcoquitlam', 2023, 61844544), 
+( 7122, 'whiteRock', 'surrey', 2023, 51185453), 
+( 7041, 'langley', 'Langley', 2023, 91720613), 
+( 7045, 'coquitlam', 'coquitlam', 2023, 57571628), 
+( 7043, 'Richmond', 'Richmond', 2023, 80795796);
+
+USE HomeDepot;
+
+
+--CREATING THE HOMEDEPOT BURNABY STORE SALES 2023 TABLE
+
+
+
+CREATE table HD_BurnabySales2023 (
+SalesID INT PRIMARY KEY IDENTITY(1,1),
+StoreID  INT,
+YEARMONTH DATE,
+TotalSales INT
+);
+
+
+EXEC sp_columns HD_BurnabySales2023;
+
+INSERT INTO HD_BurnabySales2023 (StoreID,YEARMONTH,TotalSales) VALUES 
+(7047, '2023-01-01', 6793015), 
+(7047, '2023-02-01', 5537365),
+(7047, '2023-03-01', 5887716),
+(7047, '2023-04-01', 9004771),
+(7047, '2023-05-01', 8700424),
+(7047, '2023-06-01', 7449621),
+(7047, '2023-07-01', 9295959),
+(7047, '2023-08-01', 7008913),
+(7047, '2023-09-01', 6686829),
+(7047, '2023-10-01',7746528),
+(7047, '2023-11-01',6654956),
+(7047, '2023-12-01',5833567);
+
+
+
+
+SELECT * FROM HD_BurnabySales2023;
+
+
+USE HomeDepot;
+
+
+--CREATING A TABLE FOR THE LTSA - LIKELY TO SHOP AGAIN) SCORE OF BURNABY-HOME DEPOT CANADA
+
+
+CREATE table LTSAScore_Burnaby2023 (
+ScoreID INT PRIMARY KEY IDENTITY(1,1),
+StoreID  INT,
+YEARMONTH DATE,
+LTSA_Score DECIMAL(5,2) CONSTRAINT CK_LTSAScore check (LTSA_Score >=0 AND LTSA_Score <=100) 
+);
+
+
+EXEC sp_columns LTSAScore_Burnaby2023;
+
+
+INSERT INTO LTSAScore_Burnaby2023(StoreID,YEARMONTH,LTSA_Score) values 
+(7047,'2023-01-01', 86.4),
+(7047,'2023-02-01', 79.9),
+(7047,'2023-03-01', 78.9),
+(7047,'2023-04-01', 79.7),
+(7047,'2023-05-01', 84.5),
+(7047,'2023-06-01', 82.3),
+(7047,'2023-07-01', 81.4),
+(7047,'2023-08-01', 79.2),
+(7047,'2023-09-01', 76.9),
+(7047,'2023-10-01', 75.4),
+(7047,'2023-11-01', 80.3),
+(7047,'2023-12-01', 81.3);
+
+
+SELECT * FROM LTSAScore_Burnaby2023;
+
+
+
+
+--CREATING A TABLE FOR THE GET - GREET, ENGAGE, THANK  SCORE OF BURNABY-HOME DEPOT CANADA
+
+
+CREATE table GETScore_Burnaby2023 (
+ScoreID INT PRIMARY KEY IDENTITY(1,1),
+StoreID  INT,
+YEARMONTH DATE,
+GET_Score DECIMAL(5,2) CONSTRAINT CK_GETScore check (GET_Score >=0 AND GET_Score <=100) 
+);
+
+
+EXEC sp_columns GETScore_Burnaby2023;
+
+INSERT INTO GETScore_Burnaby2023(StoreID,YEARMONTH,GET_Score) values 
+(7047,'2023-01-01', 84.1),
+(7047,'2023-02-01', 85.5),
+(7047,'2023-03-01', 86.1),
+(7047,'2023-04-01', 81.3),
+(7047,'2023-05-01', 80.0),
+(7047,'2023-06-01', 80.4),
+(7047,'2023-07-01', 81.6),
+(7047,'2023-08-01', 76.2),
+(7047,'2023-09-01', 74.9),
+(7047,'2023-10-01', 70.8),
+(7047,'2023-11-01', 75.7),
+(7047,'2023-12-01', 77.7);
+
+
+SELECT * FROM GETScore_Burnaby2023;
+
+--CREATING A TABLE FOR LTSA SCORES BUT FOR THE STORES IN AND AROUND VANCOUVER, CANADA  
+
+
+
+Create Table LTSAScore_ALLStores2023 (
+ScoreID INT PRIMARY KEY IDENTITY(1,1),
+StoreID  INT,
+StoreName VARCHAR(50),
+YEARMONTH DATE,
+LTSA_Score DECIMAL(5,2) CONSTRAINT CK_LTSAScore_ALLStores2023 check (LTSA_Score >=0 AND LTSA_Score <=100) 
+);
+
+EXEC sp_columns LTSAScore_Allstores2023;
+
+
+INSERT INTO LTSAScore_ALLStores2023(StoreID,StoreName,YEARMONTH,LTSA_Score) values 
+(7047,'Burnaby','2023-01-01', 80.51),
+(7259,'Cambie','2023-02-01', 88.79),
+(7045,'Coquitlam','2023-03-01', 89.3),
+(7043,'Richmond','2023-04-01', 81.92),
+(7044,'SouthSurrey','2023-05-01', 83.24),
+(7122,'White Rock','2023-06-01', 85.24),
+(7145,'PortCoquitlam','2023-07-01', 86.00),
+(7041,'Langley','2023-08-01', 83.90),
+(7046,'NorthSurrey','2023-09-01', 79.00),
+(7042,'VancouverTerminal','2023-10-01', 82.05);
+
+
+SELECT * FROM LTSAScore_ALLStores2023;
+
+
+
+--CREATING TABLE FOR THE INVENTORY(2023) OF HOME DEPOT BURNABY
+
+CREATE TABLE Inventory2023_Burnaby(
+Id INT PRIMARY KEY IDENTITY(1,1),
+StoreId INT,
+YEARMONTH DATE,
+Inventory_value INT
+);
+
+
+INSERT INTO Inventory2023_Burnaby(StoreId,YEARMONTH,Inventory_value) VALUES
+(7047, '2023-01-01', 10934434),
+(7047, '2023-02-01', 11172157),
+(7047, '2023-03-01', 11541247),
+(7047, '2023-04-01', 12079074),
+(7047, '2023-05-01', 11577846),
+(7047, '2023-06-01', 11692018),
+(7047, '2023-07-01', 11492785),
+(7047, '2023-08-01', 11303630),
+(7047, '2023-09-01', 11097190),
+(7047, '2023-10-01', 11488033),
+(7047, '2023-11-01', 11099275),
+(7047, '2023-12-01', 11416810);
+
+
+SELECT *
+FROM Inventory2023_Burnaby;
+
+
+--creating a table combining the sales and inventory for the home depot burnaby
+
+
+SELECT 
+       HD_BurnabySales2023.StoreID,
+       HD_BurnabySales2023.YEARMONTH,
+       HD_BurnabySales2023.TotalSales,
+       Inventory2023_Burnaby.Inventory_value
+INTO SalesAndInventory
+
+FROM HD_BurnabySales2023
+
+JOIN
+Inventory2023_Burnaby
+
+ON HD_BurnabySales2023.YEARMONTH = Inventory2023_Burnaby.YEARMONTH
+
+
+select * 
+From SalesAndInventory;
+
+
+--CREATING A TABLE WITH THE PRECIPITATION DETAILS OF VANCOUVER FOR THE YAR 2023 TO COMPARE WITH BURNABY STORE SALES DATA
+
+
+CREATE TABLE PRECIPITATION (
+ID INT PRIMARY KEY IDENTITY(1,1),
+LOCATION VARCHAR(50),
+YEARMONTH DATE,
+PRECIPITATION DECIMAL(4,1)
+);
+
+
+INSERT INTO PRECIPITATION (LOCATION,YEARMONTH,PRECIPITATION) VALUES 
+('Vancouver', '2023-01-01', 122.7),
+('Vancouver', '2023-02-01', 74.8),
+('Vancouver', '2023-03-01', 38.4),
+('Vancouver', '2023-04-01', 99.2),
+('Vancouver', '2023-05-01', 16.1),
+('Vancouver', '2023-06-01', 19.9),
+('Vancouver', '2023-07-01', 20.5),
+('Vancouver', '2023-08-01', 34.3),
+('Vancouver', '2023-09-01', 33.3),
+('Vancouver', '2023-10-01', 118.2),
+('Vancouver', '2023-11-01', 112.0),
+('Vancouver', '2023-12-01', 185.1);
+
+
+
+SELECT *
+FROM PRECIPITATION;
+
+
+--PERFORMING A JOIN ON SALES DATA AND PRECIPITATION DATA
+
+USE HomeDepot;
+
+SELECT HD_BurnabySales2023.StoreID,
+       HD_BurnabySales2023.TotalSales,
+	   HD_BurnabySales2023.YEARMONTH,
+	   PRECIPITATION.PRECIPITATION
+INTO SalesAndPrecipitation
+
+From HD_BurnabySales2023
+
+join PRECIPITATION
+
+on HD_BurnabySales2023.YEARMONTH = PRECIPITATION.YEARMONTH
+
+Select *
+From SalesAndPrecipitation;
+
+
+
+use HomeDepot;
+
+--CREATING DEPARTMENT SALES TABLE FOE HOME DEPOT BURNABY 2023
+
+
+
+create table DepartmentSales_burnaby2023(
+DepartmentId VARCHAR(10) PRIMARY KEY,
+StoreId Int,
+YearMonth INT,
+DepartmentName Varchar(120),
+TotalSales INT
+);
+
+INSERT INTO DepartmentSales_burnaby2023(DepartmentId,StoreId,YearMonth,DepartmentName,TotalSales) VALUES 
+('21', 7047,'2023', 'Lumber', 6819349),
+('22', 7047, '2023','BuildingMaterials', 7044796),
+('23', 7047, '2023','Flooring', 3941372),
+('24', 7047,'2023', 'Paint', 6923255),
+('25', 7047,'2023', 'Hardware', 14424954),
+('26', 7047,'2023', 'Plumbing', 6829315),
+('27A', 7047,'2023', 'Electrical', 4306620),
+('27B', 7047,'2023', 'Lighting', 3264675),
+('28', 7047, '2023','Seasonal_Garden', 10911932),
+('29A', 7047,'2023', 'Appliances', 7960210),
+('29B', 7047,'2023', 'KitchenAndBath', 6566740),
+('30', 7047, '2023','Millwork', 4037104),
+('59', 7047,'2023', 'BlindsAndWallpaper', 3083299);
+
+
+Update DepartmentSales_burnaby2023
+SET DepartmentName = 'Lumber & BuildingMaterials',
+    DepartmentId   = '21&22',
+    TotalSales = (
+	Select sum(TotalSales)
+	From DepartmentSales_burnaby2023
+	WHERE DepartmentName IN ('Lumber', 'BuildingMaterials')
+	)
+	WHERE DepartmentName = 'Lumber' ;
+
+Delete from DepartmentSales_burnaby2023
+ WHERE DepartmentName = 'BuildingMaterials';
+
+ 
+
+ select * 
+ from DepartmentSales_burnaby2023;
+
+--CREATING A TABLE TO SHOW THE CONTRIBUTION OF TOP 3 DEPARTMENTS(LUMBER&BUILDING MATERIALS, HARDWARE, SEASONAL/GARDEN)
+-- TO TOTAL SALES OF BURNABY STORE
+
+Select TOP 3 DepartmentName, SUM(TotalSales) AS TotalSales
+From DepartmentSales_burnaby2023
+GROUP BY DepartmentName
+ORDER BY SUM(TotalSales) DESC;
+
+CREATE TABLE Top3SalesContributors (
+ StoreId INT,
+ DepartmentName VARCHAR(100),
+ YearMonth INT,
+ TotalSales INT
+ );
+
+ INSERT INTO Top3SalesContributors( StoreId,DepartmentName,YearMonth,TotalSales) 
+ VALUES (7047,'Hardware','2023', 14424954),
+        (7047,'Lumber&BuildingMaterials','2023',13864145),
+		(7047,'Seasonal_Garden','2023',10911932);
+
+select * from Top3SalesContributors;
+
+WITH Contribution AS (
+SELECT 'HD_BurnabySales2023' AS StoreDepartments, Sum(TotalSales) AS TotalSales 
+From HD_BurnabySales2023
+WHERE StoreID = '7047'
+
+UNION ALL
+
+SELECT DepartmentName AS StoreDepartments, SUM(Totalsales) AS TotaslSales
+From Top3SalesContributors
+WHERE StoreId = 7047
+Group BY DepartmentName
+
+)
+
+SELECT *
+INTO TopContributors
+From Contribution;
+
+select * from TopContributors;
+
+
+--CREATING TABLES REPRESENTING THE MONTHLY DATA OF 
+--DEPARTEMENTS LUMBER&BUILDING MATERIALS, SEASONAL_GARDEN TO COMPARE THEM WITH PRECIPITATION 
+
+
+
+
+Create table LumberBuildingMaterialsSales2023 (
+StoreId Int, 
+DepartmentId Varchar(10),
+DepartmentName Varchar(100),
+YearMonth Date,
+TotalSales Int
+);
+
+Insert into LumberBuildingMaterialsSales2023 (StoreId,DepartmentId,DepartmentName,YearMonth,TotalSales)
+Values
+(7047,21&22,'Lumber&BuildingMaterials','2023-01-01',924187),
+(7047,21&22,'Lumber&BuildingMaterials','2023-02-01',817650),
+(7047,21&22,'Lumber&BuildingMaterials','2023-03-01',937574),
+(7047,21&22,'Lumber&BuildingMaterials','2023-04-01',1405536),
+(7047,21&22,'Lumber&BuildingMaterials','2023-05-01',1325906),
+(7047,21&22,'Lumber&BuildingMaterials','2023-06-01',1322879),
+(7047,21&22,'Lumber&BuildingMaterials','2023-07-01',1681161),
+(7047,21&22,'Lumber&BuildingMaterials','2023-08-01',1266807),
+(7047,21&22,'Lumber&BuildingMaterials','2023-09-01',1221111),
+(7047,21&22,'Lumber&BuildingMaterials','2023-10-01',1317372),
+(7047,21&22,'Lumber&BuildingMaterials','2023-11-01',974068),
+(7047,21&22,'Lumber&BuildingMaterials','2023-12-01',804633);
+
+
+
+Select 
+LumberBuildingMaterialsSales2023.DepartmentId,
+LumberBuildingMaterialsSales2023.DepartmentName,
+LumberBuildingMaterialsSales2023.YearMonth,
+LumberBuildingMaterialsSales2023.TotalSales,
+PRECIPITATION.PRECIPITATION
+Into DepartmentSalesAndPrecipitation
+
+From LumberBuildingMaterialsSales2023
+
+Join 
+
+PRECIPITATION
+
+ON LumberBuildingMaterialsSales2023.YearMonth = PRECIPITATION.YEARMONTH
+
+
+SELECT *
+FROM DepartmentSalesAndPrecipitation;
+
+
+
+
+--NOW FOR THE SEASONAL_GARDEN DEPARTMENT
+
+
+
+Create table Seasonal_GardenSales2023 (
+StoreId Int, 
+DepartmentId Varchar(10),
+DepartmentName Varchar(100),
+YearMonth Date,
+TotalSales Int
+);
+
+
+Insert into  Seasonal_GardenSales2023(StoreId,DepartmentId,DepartmentName,YearMonth,TotalSales)
+Values
+(7047,28,'Seasonal_Garden','2023-01-01',410981),
+(7047,28,'Seasonal_Garden','2023-02-01',412941),
+(7047,28,'Seasonal_Garden','2023-03-01',675313),
+(7047,28,'Seasonal_Garden','2023-04-01',1399696),
+(7047,28,'Seasonal_Garden','2023-05-01',2107044),
+(7047,28,'Seasonal_Garden','2023-06-01',1280533),
+(7047,28,'Seasonal_Garden','2023-07-01',1337026),
+(7047,28,'Seasonal_Garden','2023-08-01',769751),
+(7047,28,'Seasonal_Garden','2023-09-01',671438),
+(7047,28,'Seasonal_Garden','2023-10-01',658368),
+(7047,28,'Seasonal_Garden','2023-11-01',617248),
+(7047,28,'Seasonal_Garden','2023-12-01',546558);
+
+
+Select 
+Seasonal_GardenSales2023.DepartmentId,
+Seasonal_GardenSales2023.DepartmentName,
+Seasonal_GardenSales2023.YearMonth,
+Seasonal_GardenSales2023.TotalSales,
+PRECIPITATION.PRECIPITATION
+Into SeasonalDepAndPrecipitation
+
+From Seasonal_GardenSales2023
+
+Join 
+
+PRECIPITATION
+
+ON Seasonal_GardenSales2023.YearMonth = PRECIPITATION.YEARMONTH
+
+
+SELECT *
+FROM SeasonalDepAndPrecipitation;
